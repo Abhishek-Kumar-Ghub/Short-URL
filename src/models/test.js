@@ -13,7 +13,11 @@ ShortID:{
 Clicks:{
     type:Number,
     default:0,
-}
+},
+lastAccess:{
+    type:Date,
+    default:null,
+},
 },{timestamps:true})
 
 const Url=mongoose.model("Url", urlSchema);

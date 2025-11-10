@@ -22,4 +22,28 @@ console.error("error occured")
 res.status(500).json({message:error.message})
 }
 }
- export {shortUrl};
+
+const reDirect=async(req,res)=>{
+try{
+const {shortID}= req.params;
+const redirect=await Url.findOne({ShortID: shortID })
+if(!redirect){
+  return res.status(404).json({message:"URL not found"})
+}
+
+redirect.Clicks+=1;
+
+redirect.lastAccess=Date.now()
+ await redirect.save();
+
+console.log(redirect)
+// res.status(200).json({message:"successful", redirect})
+res.redirect(redirect.OriginalURL)
+
+}
+catch(error){
+console.error(error.message)
+res.status(500).json({message:error.message})
+}
+}
+ export {shortUrl , reDirect};
